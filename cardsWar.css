@@ -1,0 +1,135 @@
+
+/*I really like SASS for CSS but this is just direct CSS for simplicity and speed */
+
+body {
+    padding: 50px 0;
+}
+
+h1 {
+    margin-bottom: 50px;
+}
+
+.player {
+    border: 1px solid black;
+    border-radius: 10px;
+    min-height: 350px;
+    margin-bottom: 76px;
+    padding: 25px;
+    position: relative;
+}
+
+h2 span {
+    display: none;
+}
+
+h2 span.winner {
+    color: blue;
+    display: inline;
+}
+
+.score {
+    font-size: 2rem;
+    right: 20px;
+    top: 20px;
+    position: absolute;
+} 
+
+ul.cards {
+    list-style: none;
+    margin-top: 2rem;
+}
+
+ul.cards li { /*these would be rems but px is quicker than calculating for demo */
+    border: 2px solid;
+    border-radius: 0.75rem;
+    box-shadow: 0.2rem 0.2rem 0.2rem #999;
+    display: inline-block;
+    margin-right: 1rem;
+    padding: 1rem;
+    width: 143px;
+    -webkit-animation: fadein 1s ease-in; 
+    -moz-animation: fadein 1s ease-in;
+    -ms-animation: fadein 1s ease-in;
+    -o-animation: fadein 1s ease-in;
+    animation: fadein 1s ease-in;
+}
+
+ul.cards li.warm {
+    border-color: #000;
+}
+
+ul.cards li.warm {
+    border-color: #F00;
+}
+
+ul.cards li img { 
+    height: 10.375rem; /*166px*/
+    width: 6.9375rem;  /*111px*/
+}
+
+.winner {
+    background: #FF851B;
+    border: 0.4rem solid #FF4136;
+    border-radius: 1rem;
+    box-shadow: 0.6rem 0.6rem 0.3rem #AAA;
+    color: #111111;
+    height: 16rem;
+    line-height: 16rem;
+    opacity: 0;
+    position: fixed;
+    width: 40rem;
+    z-index: 0;
+}
+
+.winner h3 {
+    font-size: 3rem;
+    left: 50%;
+    margin: auto;
+    position: absolute;
+    top: 30%;
+    transform: translateY(-50%);
+    transform: translateX(-40%);
+}
+
+.winner.show-winner {
+    left: 50%;
+    margin-left: -20rem;
+    margin-top: -8rem;
+    opacity: 1;
+    top: 50%;
+    z-index: 2;
+    -webkit-animation: fadein 2s ease-in; 
+    -moz-animation: fadein 2s ease-in;
+    -ms-animation: fadein 2s ease-in;
+    -o-animation: fadein 2s ease-in;
+    animation: fadein 2s ease-in;
+ }
+
+.buttons-main {
+    /*margin-top: 100px;*/
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
