@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Code Test</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous" />
+	<link rel="stylesheet" href="cardsWar.css" />
+	
+	<!-- playing card images downloaded from https://github.com/hayeah/playing-cards-assets -->
+</head>
+<body>
+
+    <div class="winner"><h3><span>No one</span> is the Winner!</h3></div>
+
+    <section class="container">
+        <header><h1>Let's play!<h1></header>
+    </section> 
+
+    <section class="container player player1">
+        <header><h2>Player 1 <span>Wins this round!</span><h2></header>
+        <ul class="cards">
+        </ul>
+        <div class="score">Score: <span>0</span></div>
+    </section>
+    
+    <section class="container player player2">
+        <header><h2>Player 2 <span>Wins this round!</span><h2></header>
+        <ul class="cards">
+        </ul>
+        <div class="score">Score: <span>0</span></div>
+    </section>
+    
+    <div class="container buttons-main">
+        <button type="button" class="btn btn-outline-primary btn-sm new-game" title="Click here to start a new game">New Game</button>
+        <button type="button" class="btn btn-outline-primary btn-sm next-hand" title="Click here to continue" disabled="disabled">Deal Next Card</button>
+        <!-- In a real application, probably give an option to save progress to local storage. But probably beyond scope of this test
+        <button type="button" class="btn btn-outline-secondary btn-sm" disabled="disabled">Save Game</button>
+        -->
+    </div>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+    <!-- backbone 4 is currently in alpha. The initial download brings in jquery but this can be swaped out I read. Since it's here, going to make use of it -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="cardsWar.js"></script>
+</body>
+</html>
