@@ -2,50 +2,382 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>Code Test</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous" />
-	<link rel="stylesheet" href="cardsWar.css" />
-	
+	<title>Code Test - War Card Game</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<!-- playing card images downloaded from https://github.com/hayeah/playing-cards-assets -->
+	<style type="text/css">
+
+		/*
+			Normally CSS would be linked. Put inline to single-source assets into one page
+		*/
+
+			body {
+			    padding: 50px 0;
+			}
+
+			h1 {
+			    margin-bottom: 50px;
+			}
+
+			.player {
+			    background-color: #089c00;
+			    background-image: url('img/felt.png');
+			    border: 1px solid black;
+			    border-radius: 10px;
+			    min-height: 350px;
+			    margin-bottom: 76px;
+			    padding: 25px;
+			    position: relative;
+			}
+
+			h2 span {
+			    display: none;
+			}
+
+			h2 span#winner {
+			    color: blue;
+			    display: inline;
+			}
+
+			.score {
+			    font-size: 2rem;
+			    right: 20px;
+			    top: 20px;
+			    position: absolute;
+			}
+
+			ul.cards {
+			    list-style: none;
+			    margin-top: 2rem;
+			}
+
+			ul.cards li {
+			    background: white;
+			    border: 2px solid;
+			    border-radius: 0.75rem;
+			    box-shadow: 0.2rem 0.2rem 0.2rem #000;
+			    display: inline-block;
+			    margin-right: 1rem;
+			    padding: 1rem;
+			    width: 143px;
+			    -webkit-animation: fadein 1s ease-in;
+			    -moz-animation: fadein 1s ease-in;
+			    -ms-animation: fadein 1s ease-in;
+			    -o-animation: fadein 1s ease-in;
+			    animation: fadein 1s ease-in;
+			}
+
+			ul.cards li.warm {
+			    border-color: #000;
+			}
+
+			ul.cards li.warm {
+			    border-color: #F00;
+			}
+
+			ul.cards li img {
+			    height: 10.375rem; /*166px*/
+			    width: 6.9375rem;  /*111px*/
+			}
+
+			#winner {
+			    background: #FF851B;
+			    border: 0.4rem solid #FF4136;
+			    border-radius: 1rem;
+			    box-shadow: 0.6rem 0.6rem 0.3rem #000;
+			    color: #111111;
+			    height: 16rem;
+			    line-height: 16rem;
+			    opacity: 0;
+			    position: fixed;
+			    width: 40rem;
+			    z-index: 0;
+			}
+
+			#winner h3 {
+			    font-size: 3rem;
+			    left: 50%;
+			    margin: auto;
+			    position: absolute;
+			    top: 30%;
+			    transform: translateY(-50%);
+			    transform: translateX(-40%);
+			}
+
+			#winner.show-winner {
+			    left: 50%;
+			    margin-left: -20rem;
+			    margin-top: -8rem;
+			    opacity: 1;
+			    top: 50%;
+			    z-index: 2;
+			    -webkit-animation: fadein 2s ease-in;
+			    -moz-animation: fadein 2s ease-in;
+			    -ms-animation: fadein 2s ease-in;
+			    -o-animation: fadein 2s ease-in;
+			    animation: fadein 2s ease-in;
+			 }
+
+			@keyframes fadein {
+			    from { opacity: 0; }
+			    to   { opacity: 1; }
+			}
+
+			@-moz-keyframes fadein {
+			    from { opacity: 0; }
+			    to   { opacity: 1; }
+			}
+
+			@-webkit-keyframes fadein {
+			    from { opacity: 0; }
+			    to   { opacity: 1; }
+			}
+
+			@-ms-keyframes fadein {
+			    from { opacity: 0; }
+			    to   { opacity: 1; }
+			}
+
+			@-o-keyframes fadein {
+			    from { opacity: 0; }
+			    to   { opacity: 1; }
+			}
+
+	</style>
 </head>
+
 <body>
 
-    <div class="winner"><h3><span>No one</span> is the Winner!</h3></div>
+    <div id="winner"><h3><span id="win-context">No One</span> Wins</h3></div>
 
     <section class="container">
-        <header><h1>Let's play!<h1></header>
-    </section> 
+        <header><h1>Let's Play War!<h1></header>
+    </section>
 
     <section class="container player player1">
         <header><h2>Player 1 <span>Wins this round!</span><h2></header>
-        <ul class="cards">
+        <ul aria-live="polite" class="cards">
+					<!--  cards are populated by script -->
         </ul>
-        <div class="score">Score: <span>0</span></div>
+        <div class="score">Score: <span id="score-player1">0</span></div>
     </section>
-    
+
     <section class="container player player2">
         <header><h2>Player 2 <span>Wins this round!</span><h2></header>
-        <ul class="cards">
+        <ul aria-live="polite" class="cards">
+					<!--  cards are populated by script -->
         </ul>
-        <div class="score">Score: <span>0</span></div>
+        <div class="score">Score: <span id="score-player2">0</span></div>
     </section>
-    
+
     <div class="container buttons-main">
         <button type="button" class="btn btn-outline-primary btn-sm new-game" title="Click here to start a new game">New Game</button>
-        <button type="button" class="btn btn-outline-primary btn-sm next-hand" title="Click here to continue" disabled="disabled">Deal Next Card</button>
-        <!-- In a real application, probably give an option to save progress to local storage. But probably beyond scope of this test
-        <button type="button" class="btn btn-outline-secondary btn-sm" disabled="disabled">Save Game</button>
-        -->
+        <button type="button" class="btn btn-outline-primary btn-sm next-hand" title="Click here to continue" disabled="disabled">Deal Next Hand</button>
     </div>
 
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
-    <!-- backbone 4 is currently in alpha. The initial download brings in jquery but this can be swaped out I read. Since it's here, going to make use of it -->
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <!--<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    <script src="cardsWar.js"></script>
+
+    <script type="text/javascript">
+
+			/*
+				Normally JS would be linked. Put inline to single-source assets into one page
+			*/
+
+				let game;
+				let currentDeck;
+
+
+				class Card {
+					constructor (name, suite, value) {
+						this.name = name;
+						this.suite = suite;
+						this.value = value;
+					}
+				}
+
+
+				function Deck () {
+						const cardNames = {
+								"11": "jack",
+								"12": "queen",
+								"13": "king",
+								"14": "ace"
+						};
+						const cardSuites = ['clubs', 'diamonds', 'hearts', 'spades'];
+						const cardValues = [2,3,4,5,6,7,8,9,10,11,12,13,14];
+
+						this.deck = {
+								"cards": [],
+								"newDeck": function () {
+										let newDeck = this;
+										newDeck.cards.length = 0;
+										cardSuites.forEach(function (suite) {
+												cardValues.forEach(function (value) {
+														let addCard = new Card();
+														let name = value + '';
+
+														addCard.name = cardNames.hasOwnProperty(name) ? cardNames[name] : name;
+														addCard.suite = suite;
+														addCard.value = value;
+
+														newDeck.cards.push(addCard);
+														newDeck.shuffleDeck(newDeck.cards);
+												});
+										});
+								},
+								"shuffleDeck": function (cards) {
+										//this is the FisherYates randomize array script
+										//http://sedition.com/perl/javascript-fy.html
+										let i = cards.length;
+										if ( i === 0 ) return false;
+										while ( --i ) {
+												 let j = Math.floor( Math.random() * ( i + 1 ) );
+												 let tempi = cards[i];
+												 let tempj = cards[j];
+												 cards[i] = tempj;
+												 cards[j] = tempi;
+										}
+								}
+						};
+						return this.deck;
+				};
+
+
+				function Match () {
+						this.match = {
+								"dealCards": function () {
+										let match = this;
+										if (currentDeck.length > 0) {
+
+												let p1cardIndex = 0;
+												let p1card = currentDeck[p1cardIndex];
+												match.player1.hand.push(p1card);
+												match.displayHand(p1card, 'player1');
+												currentDeck.splice(p1cardIndex, 1);
+
+												let p2cardIndex = 0;
+												let p2card = currentDeck[p2cardIndex];
+												match.player2.hand.push(p2card);
+												match.displayHand(p2card, 'player2');
+												currentDeck.splice(p2cardIndex, 1);
+
+												let winner = match.determineWinner(p1card, p2card);
+
+												if (winner === 'tie') {
+														match.dealCards();
+												}
+												else {
+														let bothHands = match.player1.hand.concat(match.player2.hand);
+														bothHands.forEach(function (card) {
+																match[winner].cards_won.push(card);
+														});
+														match[winner].won = match[winner].cards_won.length;
+												}
+
+												match.player1.hand.length = 0;
+												match.player2.hand.length = 0;
+
+												document.getElementById('score-player1').textContent = match.player1.cards_won.length;
+												document.getElementById('score-player2').textContent = match.player2.cards_won.length;
+										}
+										else {
+												var winning_player;
+												var p1 = match.player1.cards_won.length;
+												var p2 = match.player2.cards_won.length;
+
+												if (p1 === p2) {
+														winning_player = 'Tie: Neither Player';
+												}
+												else {
+														winning_player = p1 > p2 ? 'Player 1' : 'Player 2';
+												}
+
+												document.querySelector('.next-hand').setAttribute('disabled', 'disabled');
+												Array.from(document.querySelectorAll('.cards')).forEach(function (cardlist) {
+													cardlist.innerHTML = '';
+												});
+												document.getElementById('win-context').textContent = winning_player;
+												document.getElementById('winner').classList.add('show-winner');
+										}
+								},
+
+								"determineWinner": function (p1, p2) {
+										let result;
+										if (p1.value === p2.value) {
+												result = 'tie';
+										}
+										else {
+												result = p1.value > p2.value ? 'player1' : 'player2';
+										}
+										return result;
+								},
+
+								"displayHand": function (card, player) {
+										let border_color = card.suite === 'hearts' || card.suite === 'diamonds' ? 'warm' : 'cold';
+
+										let listCard = document.createElement('li');
+										listCard.setAttribute('class', border_color);
+										listCard.setAttribute('title', card.name + ' of ' + card.suite);
+										let cardImage = document.createElement('img');
+										cardImage.setAttribute('src', 'img/' + card.name + '_of_' + card.suite + '.png');
+										listCard.appendChild(cardImage);
+
+										document.querySelector('.' + player + ' .cards').appendChild(listCard);
+								},
+
+								"player1": new Player(),
+								"player2": new Player()
+						};
+						return this.match;
+				};
+
+
+				class Player {
+					constructor () {
+						this.cards_won = [];
+						this.hand = [];
+						this.won = 0;
+					}
+				}
+
+
+				document.querySelector('.new-game').addEventListener('click', event => {
+						event.preventDefault();
+
+						if (currentDeck !== undefined && Object.keys(currentDeck).length > 0) {
+							Array.from(document.querySelectorAll('.cards')).forEach(function (cardlist) {
+								cardlist.innerHTML = '';
+							});
+						}
+
+						document.getElementById('winner').classList.remove('show-winner');
+
+						let deck = new Deck();
+						deck.newDeck();
+						game = new Match();
+
+						currentDeck = deck.cards;
+
+						game.dealCards();
+						document.querySelector('.next-hand').removeAttribute('disabled');
+				});
+
+
+				document.querySelector('.next-hand').addEventListener('click', event => {
+						event.preventDefault();
+
+						Array.from(document.querySelectorAll('.cards')).forEach(function (cardlist) {
+							cardlist.innerHTML = '';
+						});
+
+						game.dealCards();
+				});
+
+
+				document.querySelector('#winner').addEventListener('click', event =>{
+						event.preventDefault();
+						document.getElementById('winner').classList.remove('show-winner');
+				});
+
+		</script>
 </body>
 </html>
